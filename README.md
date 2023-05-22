@@ -43,7 +43,83 @@ local Module = require(script:FindFirstChild('CircularModule'))
 
 ### > `Module:Create`
 
-Now that the Module is created, we can use the `Module:Create` function to create Circle Object. The Circle Object is basically the circle gui object you can manipulate individually.
+Now that the Module is created, we can use the `Module:Create` function to create Circle Object. The Circle Object is basically the object for the progress bar you can manipulate individually.
 ```lua
+local Module = require(script:FindFirstChild('CircularModule'))
+
+local progressBar = Module:Create(...)
+```
+
+The `Module:Create` function Takes 3 parametters
+
+| Name    | Type     | Optionnal & Default Value |
+|---------|----------|---------------------------|
+| parent  | Instance | no                        |
+| size    | number   | yes (10 by default)       |
+| space   | number   | yes (50 by default)       |
+| range   | number   | yes (75 by default)       |
 
 
+- `parent`: The parent of the ProgressBar. It will be at the center of it. It can be any Gui Object such as a Frame, a TextLabel...
+- `size`: The size of the ring's circle. The higher the number is, the bigger then ring is.
+- `space`: The radius of the circle. It's the space between all dots of the circle.
+- `range`: The precision of the circle. It's the number of dots, so the higher number = higher resolution (but it means more dots, so less performances).
+
+<br>
+
+After creating the progressBar, you now have a `CirclarObject`.
+
+<br><br>
+
+### > CirclarObject
+
+Here is the CircularObject official type values :
+```ts
+type CircularObject = {
+	Parent:         Instance,
+	Object:         Folder,
+
+	Size:           number,
+	Range:          number,
+	Space:          number,
+
+	Fill:           number,
+	CurrentFill:    number,
+
+	EndFlag:        number?,
+	CurrentFlag:    number,
+	
+	Visible:        boolean,
+	Colors:         CircularColor,
+
+	Set:            (self: CircularObject, percentage: number) -> any,
+	Add:            (self: CircularObject, percentage: number) -> any,
+	SetColor:       (self: CircularObject, colors: CircularColor) -> any,
+
+	Flag:           (self: CircularObject) -> any,
+	SetEndFlag:     (self: CircularObject) -> any,
+}
+```
+
+### > `Object:SetColors`
+
+The `Object:SetColors` function takes one parametter, which is a dictionnay that contains `Parametter.Fill` and `Parametter.Empty`, which are bother Color3 values. <br>
+By default, the Fill value will be set to Green (#33cc33) and the empty to White (#ffffff)
+
+Here is an example on how to set your custom colors :
+```lua
+local Module = require(script:FindFirstChild('CircularModule'))
+
+local progressBar = Module:Create(Parent)
+
+--> For Red fill with Black background
+progressBar:SetColors({
+  Fill = Color3.fromRGB(255, 0, 0),
+  Empty = Color3.fromRGB(0, 0, 0)
+})
+
+--> Change the Red to Blue
+progressBar:SetColors({
+  Empty = Color3.fromRGB(0, 255, 0)
+})
+```
