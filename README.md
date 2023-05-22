@@ -6,13 +6,13 @@ Circular Progressbar Module for Roblox Studio.
 ## How to get it ?
 
 ### > Toolbox method
-- Obtain the module in roblox by clicking [<b>Here</b>](https://www.roblox.com/library/13513052096/Circular-Progressbar-Module).
+- Obtain the module in roblox by clicking [<b>Here</b>](https://www.roblox.com/library/13521835566/CircularProgressbar-Module).
 - In Roblox Studio, click on `HOME` at the top, then `ToolBox`.
 - Open your inventory (The 4 little boxes).
 - Click on `Circular Progressbar`.
 
 ### > File Method
-- Download the [CircularPrigressbar.rbxm](https://github.com/paulogarithm/CircularProgressbar/blob/main/CircularProgressbar.rbxm) File.
+- Download the [CircularProgressbar.rbxm](https://github.com/paulogarithm/CircularProgressbar/blob/main/CircularProgressbar.rbxm) File.
 - In Roblox Studio, do a right click in the Explorer.
 - Click on `Insert from File...`.
 - Select the .rbxm file just downloaded.
