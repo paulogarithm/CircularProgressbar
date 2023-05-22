@@ -101,25 +101,129 @@ type CircularObject = {
 }
 ```
 
-### > `Object:SetColors`
+<br>
+
+## The Documentation Functions
+
+### > `Object:SetColors({Fill: Color3, Empty: Color3})`
 
 The `Object:SetColors` function takes one parametter, which is a dictionnay that contains `Parametter.Fill` and `Parametter.Empty`, which are bother Color3 values. <br>
 By default, the Fill value will be set to Green (#33cc33) and the empty to White (#ffffff)
 
 Here is an example on how to set your custom colors :
 ```lua
-local Module = require(script:FindFirstChild('CircularModule'))
-
-local progressBar = Module:Create(Parent)
-
 --> For Red fill with Black background
 progressBar:SetColors({
   Fill = Color3.fromRGB(255, 0, 0),
   Empty = Color3.fromRGB(0, 0, 0)
 })
 
---> Change the Red to Blue
+--> Change the Red to Green
 progressBar:SetColors({
   Empty = Color3.fromRGB(0, 255, 0)
 })
+```
+
+<br>
+
+### > `Object:Set(number)`
+
+Sets the ProgressBar to the number given in parametter of percentage. <br>
+If the Set it to big, it will be set to 100. If it's bellow 0, it will be set to 0. <br>
+
+```lua
+progressBar:Set(50) 	--> Fill the circle to 50%
+progressBar:Set(3)	--> Fill the circle to 3%
+```
+
+<br>
+
+### > `Object:Add(number)`
+
+Adds a percentage to the one already completed.
+
+```lua
+progressBar:Set(50)	--> Set the circle to 50%
+
+progressBar:Add(10)	--> Fill the circle to 60%
+progressBar:Add(1800)	--> Fill the circle to 100%
+```
+
+<br>
+
+## Functions Documentation - Flag System
+
+### > Overall
+
+So the flag allows you to give the number of steps you want to achieve your progress-bar. <br>
+For example, you know you have 16 key steps, for example loading assets, loading guis, loading data, player...
+<br><br>
+Well instead of adding the right number, you can simply use the Flag system. <br>
+Basically, you need to set the End Flag (so how many steps will there be) then use the `Object:Flag` function when you achieve a step.
+
+<br>
+
+### > `Object:SetEndFlag(number)`
+
+Sets the end flag. So if you want 234 steps to your progress bar, you can give 234 as the parametter. <br>
+If your parametter is negative, it will return an error. <br>
+**If you don't set the end flag, the Flag system wont work.**
+
+<br>
+
+### > `Object:Flag(number?)`
+
+Flag means that you achive a step in your loading system. <br>
+If you don't give parametter, we're going to next step until the EndFlag.
+<br><br>
+If you give a parametter, it will be set to the step you given as parametter.
+
+<br>
+
+### > Example
+
+A basic example, flag without parametters :
+```lua
+local Module = require(script:FindFirstChild('CircularModule'))
+
+local progressBar = Module:Create(Parent)
+progressBar:SetEndFlag(3) 	--> There will be 3 steps to my project
+
+--] Code to load assets...
+progressBar:Flag()		--> Circle filled at 1/3
+
+--] Code to load Player...
+progressBar:Flag()		--> Circle filled at 2/3
+
+--] Code to load meshes
+progressBar:Flag()		--> Circle filled at 3/3 : The 3 steps have been completed, Circle is full
+```
+
+Another example, flags with and without parametters :
+```lua
+local Module = require(script:FindFirstChild('CircularModule'))
+
+local myNumberOfSteps = 7
+
+local progressBar = Module:Create(Parent)
+progressBar:SetEndFlag(myNumberOfStaps) 	--> There will be 7 steps to my project
+
+--] Quering data...
+progressBar:Flag(1)				--> The circle is now filled at 1/7, the First step
+
+for i = 1, 3 do
+    --] Do something 3 times...
+    progressBar:Flag()				--> The circle is now filled at 2/7, then 3/7 and then 4/7
+end
+
+for i = 1, 3 do
+    --] Do something 3 times...
+    progressBar:Flag(5)				--> This will only accomplish the 5th task, so circle is filled 5/7, 3 times
+end
+
+--] Loads player...
+progressBar:Flag()				--> The circle is now filled at 6/7
+
+--] Create Meshes locally...
+progressBar:Flag(myNumberOfSteps)		--> The circle is now filled at 7/7, the Last step, circle is full
 ```
